@@ -1,0 +1,8 @@
+.pure-button-alt {
+    font-size: 85%;
+    border-radius: 4px;
+}
+
+.active {
+    background-color: #1f8dd6;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://unpkg.com/vue"></script>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css">
+        <link rel="stylesheet" href="./static/css/custom.css">
+    </head>
+    <body>
+        <div id="app">
+            <div id="nav">
+                <button class="pure-button pure-button-alt" :class="{active: currentComponent == 'home'}" @click="swapComponent('home')">Home</button>
+                <button class="pure-button pure-button-alt" :class="{active: currentComponent == 'test'}" @click="swapComponent('test')">Test</button>
+                <button class="pure-button pure-button-alt" :class="{active: currentComponent == 'study'}" @click="swapComponent('study')">Study</button>
+                <button class="pure-button pure-button-alt" :class="{active: currentComponent == 'about'}" @click="swapComponent('about')">About</button>
+            </div>
+            <div class="banner">
+                <div class="header-text">
+                    <h1>Illinois Constitution</h1>
+                </div>
+            </div>
+            <div id="content">
+                <div :is="currentComponent"></div>
+            </div>
+        </div>
+
+        <template id="home">
+            <div>
+                <h1 class="title">Welcome</h1>
+                <p>This site is to help Illinois High School and GED students practice and study for their Illinois constitution test. The constitution test is a prerequisite to graduation or GED. If you have any questions, suggestions, or would like to help make this site better please check our <a href="/about">about</a> section.</p>
+                <p>The test is 124 questions long and there is currently no way to save your progress so please make sure you set aside enough time.</p>
+            </div>
+        </template>
+
+        <template id="test">
+            <div>
+                <form id="questions" v-on:submit.prevent="check()">
+                    {{data}}
+                    <p>Question: {{ data.question }}</p>
+                    <div v-if="data.multi">
+                        <p v-for="(item, index) in data.options"><input type="checkbox" name="question" :id="index" :value="index" v-model="answer">{{ item }}</p>
+                    </div>
+                    <div v-else>
+                        <p v-for="(item, index) in data.options"><input type="radio" name="question" :value="index" v-model="answer">{{ item }}</p>
+                    </div>
+                    <button id="submit" class="pure-button" type="submit">submit</button>
+                </form>
+                <button class="pure-button pure-button-alt" @click="startTest()">start</button>
+            </div>
+        </template>
+
+        <template id="study">
+            <div>
+                <h1 class="title">Study</h1>
+                <h2 class="title">Links</h2>
+                <ul>
+                    <li><a href="http://www.ilga.gov/commission/lrb/conmain.htm" target="_blank">http://www.ilga.gov/commission/lrb/conmain.htm</a></li>
+                    <li><a href="http://en.wikipedia.org/wiki/Constitution_of_Illinois" target="_blank">http://en.wikipedia.org/wiki/Constitution_of_Illinois</a></li>
+                    <li><a href="http://www.state.il.us/court/Kids/IL_Govt/default.asp" target="_blank">http://www.state.il.us/court/Kids/IL_Govt/default.asp</a></li>
+                    <li><a href="http://www.isba.org/sites/default/files/teachers/publications/constbook.pdf" target="_blank">http://www.isba.org/sites/default/files/teachers/publications/constbook.pdf</a></li>
+                </ul>
+            </div>
+        </template>
+
+        <template id="about">
+            <div>
+                <h1 class="title">About</h1>
+                <p class="quote">Education is the key to unlock the golden door of freedom.</p>
+                <p class="quote">~George Washington Carver</p>
+
+                <p>Education is important and knowing your rights is an important part of that. We believe everyone should have access to this information, that's why we offer you this site and resources free of charge. Running this site however is not free. If you would like to help keep this site running and make it better there are two ways you can help do this. The first is to lend us your mind, if you come accross any issues on the site or have suggestions to make it better you can open a issue or send a pull request to us on <a href="https://github.com/Mkoopajr/ilconstitution" target="_blank">Github</a>, or send us a <a href="mailto:mkoopajr@gmail.com?Subject=Issue%20ilconstitution.com">email</a>. The second way you can help is a donation, we accept these through <a href="https://gratipay.com/Mkoopajr/" target="_blank">Gratipay</a>.</p>
+
+                <h2 class="title">Future Plans</h2>
+
+                <p>We would like to get better hosting and database managament to add user accounts, social media integration, and statistical analysis (average scores, commonly missed questions, etc).</p>
+            </div>
+        </template>
+    </body>
+    <script src="./static/js/app.js"></script>
+</html>
